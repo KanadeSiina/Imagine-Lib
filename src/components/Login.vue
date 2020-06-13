@@ -27,6 +27,14 @@
               type="password"
             ></el-input>
           </el-form-item>
+          <el-select v-model="loginform.charactor" placeholder="身份">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
           <el-form-item class="btns">
             <el-button type="primary" @click="login()">登陆</el-button>
           </el-form-item>
@@ -53,12 +61,23 @@ export default {
       show: false,
       loginform: {
         username: 'compute',
-        password: '999'
+        password: '999',
+        charactor: 'Reader'
       },
       rules: {
         username: [{ validator: checkName, trigger: 'blur' }],
         password: [{ validator: checkPass, trigger: 'blur' }]
-      }
+      },
+      options: [
+        {
+          value: 'Manager',
+          label: '管理员'
+        },
+        {
+          value: 'Reader',
+          label: '读者'
+        }
+      ]
     }
   },
   mounted: function() {
@@ -125,13 +144,16 @@ export default {
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 40px;
   box-sizing: border-box;
-}
-
-.btns {
-  display: flex;
-  justify-content: flex-end;
+  .el-select {
+    width: 100px;
+  }
+  .btns {
+    display: flex;
+    justify-content: flex-end;
+    float: right;
+  }
 }
 
 .fade-enter-active,

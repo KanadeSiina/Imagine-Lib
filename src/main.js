@@ -8,6 +8,12 @@ import ElementUI from 'element-ui'
 
 import axios from 'axios'
 axios.defaults.baseURL = ''
+// 请求拦截，添加授权信息
+axios.interceptors.request.use(config => {
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  console.log(config)
+  return config
+})
 Vue.prototype.$http = axios
 
 Vue.use(ElementUI)
