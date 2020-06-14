@@ -7,7 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 
 import axios from 'axios'
-axios.defaults.baseURL = ''
+import store from './store'
+axios.defaults.baseURL = '/api'
 // 请求拦截，添加授权信息
 axios.interceptors.request.use(config => {
   config.headers.Authorization = window.sessionStorage.getItem('token')
@@ -22,5 +23,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

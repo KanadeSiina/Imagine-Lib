@@ -3,7 +3,7 @@
     <transition name="fade">
       <div v-show="show" class="login_box">
         <div class="container_header">
-          <div class="login_title" style="font-size: 20px">幻想图书馆登陆</div>
+          <div class="login_title" style="font-size: 20px">幻想图书馆登录</div>
         </div>
         <!-- 表单 -->
         <el-form
@@ -27,7 +27,7 @@
               type="password"
             ></el-input>
           </el-form-item>
-          <el-select v-model="loginform.charactor" placeholder="身份">
+          <el-select v-model="loginform.role" placeholder="身份">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -36,7 +36,7 @@
             ></el-option>
           </el-select>
           <el-form-item class="btns">
-            <el-button type="primary" @click="login()">登陆</el-button>
+            <el-button type="primary" @click="login()">登录</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -62,7 +62,7 @@ export default {
       loginform: {
         username: 'compute',
         password: '999',
-        charactor: 'Reader'
+        role: 'Reader'
       },
       rules: {
         username: [{ validator: checkName, trigger: 'blur' }],
@@ -89,14 +89,16 @@ export default {
     },
     login() {
       this.$refs.loginformRef.validate(async valid => {
-        if (!valid) return this.$message.error('登陆失败！')
+        if (!valid) return this.$message.error('登录失败！')
         const { data: res } = await this.$http.post('login', this.loginform)
         // 待有实际接口后修改
-        if (res.meta.status !== 200) return this.$message.error('登陆失败！')
-        this.$message.success('登陆成功！')
-        // const res = { data: { token: '233' } }
-        // console.log(res)
+        console.log(res)
+        console.log(res.code)
+        if (res.code !== 1) return this.$message.error('登录失败！')
+        this.$message.success('登录成功！')
         window.sessionStorage.setItem('token', res.data.token)
+        window.sessionStorage.setItem('role', res.data.role)
+        window.sessionStorage.setItem('user_id', res.data.user_id)
         this.$router.push('/dashboard')
       })
     }

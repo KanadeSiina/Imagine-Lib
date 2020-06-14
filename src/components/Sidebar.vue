@@ -3,7 +3,7 @@
     <!-- Header -->
     <el-header>
       <div class="head-container">
-        <img src="../assets/SHU_logo.png" class="logo"/>
+        <img src="../assets/SHU_logo.png" class="logo" />
         <div class="header-container" style="font-size: 20px">幻想图书馆</div>
       </div>
     </el-header>
@@ -11,33 +11,62 @@
       <!-- Aside -->
       <el-aside :width="isCollapse ? '64px' : '200px'">
         <div class="toggle-button" @click="toggleCollapse()">|||</div>
-        <el-menu
-          background-color="#323744"
-          text-color="#fff"
-          active-text-color="#409eff"
-          :collapse="isCollapse"
-          :collapse-transition="false"
-          router
-        >
-          <el-submenu index="1">
-            <template slot="title">
+        <div v-if="role === 'manager'">
+          <el-menu
+            background-color="#323744"
+            text-color="#fff"
+            active-text-color="#409eff"
+            :collapse="isCollapse"
+            :collapse-transition="false"
+            router
+          >
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-document"></i>
+                <span>入库管理</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="/Book_Manage">书目信息管理</el-menu-item>
+                <el-menu-item index="/List_Manage">图书信息管理</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-menu-item index="/borrow">
               <i class="el-icon-document"></i>
-              <span>入库管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="Book_Manage">书目信息管理</el-menu-item>
-              <el-menu-item index="List_Manage">图书信息管理</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-menu-item index="borrow">
-            <i class="el-icon-document"></i>
-            <span slot="title">借书管理</span>
-          </el-menu-item>
-          <el-menu-item index="return">
-            <i class="el-icon-document"></i>
-            <span slot="title">还书管理</span>
-          </el-menu-item>
-        </el-menu>
+              <span slot="title">借书管理</span>
+            </el-menu-item>
+            <el-menu-item index="/return">
+              <i class="el-icon-document"></i>
+              <span slot="title">还书管理</span>
+            </el-menu-item>
+            <el-menu-item index="/book">
+              <i class="el-icon-document"></i>
+              <span slot="title">图书目录</span>
+            </el-menu-item>
+          </el-menu>
+        </div>
+        <div v-else>
+          <el-menu
+            background-color="#323744"
+            text-color="#fff"
+            active-text-color="#409eff"
+            :collapse="isCollapse"
+            :collapse-transition="false"
+            router
+          >
+            <el-menu-item index="/reserve">
+              <i class="el-icon-document"></i>
+              <span slot="title">预约管理</span>
+            </el-menu-item>
+            <el-menu-item index="/rent_info">
+              <i class="el-icon-document"></i>
+              <span slot="title">借阅信息</span>
+            </el-menu-item>
+            <el-menu-item index="/book">
+              <i class="el-icon-document"></i>
+              <span slot="title">图书目录</span>
+            </el-menu-item>
+          </el-menu>
+        </div>
       </el-aside>
       <!-- Container -->
       <el-main>
@@ -49,16 +78,21 @@
 
 <script>
 export default {
-  created() {},
   data() {
     return {
-      isCollapse: false,
-      activePath: ''
+      role: '',
+      isCollapse: false
     }
+  },
+  created: function() {
+    this.setRole()
   },
   methods: {
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
+    },
+    setRole() {
+      this.role = window.sessionStorage.getItem('role')
     }
   }
 }

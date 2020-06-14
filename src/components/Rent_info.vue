@@ -21,10 +21,7 @@
 export default {
   data() {
     return {
-      input_form: {
-        ISBN: '',
-        reserve_time: ''
-      },
+      reader_id: '',
       tableData: [
         {
           book_name: '初等数论',
@@ -41,12 +38,25 @@ export default {
       ]
     }
   },
+  created: function() {
+    this.reader_id = window.sessionStorage.getItem('user_id')
+    this.getData()
+  },
   methods: {
     tableRowClassName({ row, rowIndex }) {
       if (row.book_state === '已预约') {
         return 'success-row'
       }
       return ''
+    },
+    async getData() {
+      const { data: res } = await this.$http.get('rent_info', {
+        params: {
+          reader_id: this.reader_id
+        }
+      })
+      this.tableData = res.data.data
+      console.log(this.tableData)
     }
   }
 }

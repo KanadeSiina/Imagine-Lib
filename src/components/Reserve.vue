@@ -37,10 +37,14 @@ export default {
     var checkTime = (rule, value, callback) => {
       if (value < 1) callback(new Error('预约时长需要大于1天！'))
       if (value > 10) callback(new Error('预约时长不能超过10天！'))
+      if (!(value >= 1) && !(value <= 10)) {
+        callback(new Error('输入含未知符号！'))
+      }
       callback()
     }
     return {
       input_form: {
+        reader_id: '',
         ISBN: '',
         reserve_time: ''
       },
@@ -48,7 +52,7 @@ export default {
         ISBN: [{ required: true, message: '不能为空', trigger: 'blur' }],
         reserve_time: [
           { required: true, message: '不能为空', trigger: 'blur' },
-          { validator: checkTime, trigger: 'change' }
+          { validator: checkTime, trigger: 'blur' }
         ]
       },
       tableData: [
@@ -67,11 +71,26 @@ export default {
       ]
     }
   },
+  created: function() {
+    this.input_form.reader_id = window.sessionStorage.getItem('user_id')
+    this.getData()
+  },
   methods: {
+    async getData() {
+      const { data: res } = await this.$http.get('reserve', {
+        params: {
+          reader_id: this.input_form.reader_id
+        }
+      })
+      this.tableData = res.data.data
+      console.log(this.tableData)
+    },
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         // 用axios提交表单交互
         console.log(this.input_form)
+        const { data: res } = await this.$http.post('reserve', this.input_form)
+        console.log(res)
       })
     },
     tableRowClassName({ row, rowIndex }) {

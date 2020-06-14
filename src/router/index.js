@@ -10,6 +10,7 @@ import Reserve from '@/components/Reserve.vue'
 import RentInfo from '@/components/Rent_info.vue'
 import Book from '@/components/Book.vue'
 import BookInfo from '@/components/BookInfo.vue'
+import ListInfo from '@/components/List_info.vue'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,9 @@ const routes = [
     }, {
       path: '/book/:id',
       component: BookInfo
+    }, {
+      path: '/book/:id/:list_id',
+      component: ListInfo
     }]
   }
 ]
@@ -59,10 +63,10 @@ const router = new VueRouter({
 
 // 路由导航
 router.beforeEach((to, from, next) => {
-  /* const tokenStr = window.sessionStorage.getItem('token')
+  const tokenStr = window.sessionStorage.getItem('token')
   if (!tokenStr && to.path !== '/login') return next('/login')
-  else if (to.path === '/login') return next()
-  console.log(233)
+  else if (tokenStr && to.path === '/login') return next('/dashboard')
+  /* console.log(tokenStr)
   if (checkAuth(to, tokenStr)) {
     if (to.path === '/login') return next('/dashboard')
   } */
