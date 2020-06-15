@@ -4,13 +4,13 @@
       <el-breadcrumb-item :to="{ path: '/dashboard' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>图书目录</el-breadcrumb-item>
       <el-breadcrumb-item>图书简介</el-breadcrumb-item>
-      <el-breadcrumb-item>{{$route.params.list_id}}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{list_id}}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="box-card-1">
       <h2 class="box-title">借阅记录</h2>
       <!-- 搜索功能 -->
       <p style="font-size: 20px" align="center">{{book_name}}</p>
-      <p align="center">{{$route.params.list_id}}，{{list_place}}，{{list_state}}</p>
+      <p align="center">{{list_id}}，{{list_place}}，{{list_state}}</p>
       <!-- 表格 -->
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="index"></el-table-column>
@@ -44,7 +44,19 @@ export default {
   },
   methods: {
     async getData() {
-      await console.log(this.$route.params.id, this.$route.params.list_id)
+      // console.log(this.$route.params.id, this.$route.params.list_id)
+      const { data: res } = await this.$http.get('list_info', {
+        params: {
+          ISBN: this.$route.params.id,
+          list_id: this.$route.params.list_id
+        }
+      })
+      // console.log(res)
+      this.tableData = res.data.tableData
+      this.book_name = res.data.book_name
+      this.list_id = res.data.list_id
+      this.list_place = res.data.list_place
+      this.list_state = res.data.list_state
     }
   }
 }

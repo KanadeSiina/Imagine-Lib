@@ -33,7 +33,9 @@ export default {
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         // 用axios提交表单交互
-        console.log(this.input_form)
+        // console.log(this.input_form)
+        const { data: res } = await this.$http.post('return', this.input_form)
+        console.log(res)
       })
     }
   }

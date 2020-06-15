@@ -28,9 +28,9 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="index"></el-table-column>
         <el-table-column prop="ISBN" label="ISBN号">
-            <template slot-scope="scope">
-                <a :href="'/book/'+scope.row.ISBN">{{scope.row.ISBN}}</a>
-            </template>
+          <template slot-scope="scope">
+            <a :href="'/book/'+scope.row.ISBN">{{scope.row.ISBN}}</a>
+          </template>
         </el-table-column>
         <el-table-column prop="book_name" label="书名"></el-table-column>
         <el-table-column prop="book_author" label="作者"></el-table-column>
@@ -87,17 +87,28 @@ export default {
       ]
     }
   },
+  created: function() {
+    this.getData()
+  },
   methods: {
     getTable() {
       console.log(this.queryInfo)
     },
+    async getData() {
+      // console.log(this.queryInfo)
+      const { data: res } = await this.$http.get('book', { params: this.queryInfo })
+      this.tableData = res.data
+    },
     // 页大小改变
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`)
+      this.queryInfo.pagesize = val
+      // console.log(`每页 ${val} 条`)
     },
     // 页码改变
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`)
+      this.queryInfo.pagenum = val
+      this.getData()
+      // console.log(`当前页: ${val}`)
     }
   }
 }

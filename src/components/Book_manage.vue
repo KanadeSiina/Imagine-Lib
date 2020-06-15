@@ -33,7 +33,7 @@
     </el-card>
     <el-card class="box-card-2">
       <h2 class="box-title">删除书目信息</h2>
-      <el-form :model="del_form">
+      <el-form :model="del_form" :rules="rules" ref="delformRef">
         <p>ISBN号：</p>
         <el-form-item prop="ISBN_del">
           <el-input v-model="del_form.ISBN_del" placeholder="ISBN号"></el-input>
@@ -74,8 +74,18 @@ export default {
   methods: {
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
+        if (!valid) return this.$message.erros('格式错误')
+        const { data: res } = this.$http.post('add_book', this.input_form)
+        console.log(res)
         // 用axios提交表单交互
-        console.log(this.input_form)
+        // console.log(this.input_form)
+      })
+    },
+    delSubmit() {
+      this.$refs.delformRef.validate(async valid => {
+        if (!valid) return this.$message.erros('格式错误')
+        const { data: res } = this.$http.post('del_book', this.del_form)
+        console.log(res)
       })
     }
   }

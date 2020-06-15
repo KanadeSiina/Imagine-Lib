@@ -55,7 +55,7 @@ export default {
           reader_id: this.reader_id
         }
       })
-      this.tableData = res.data.data
+      this.tableData = res.data
       console.log(this.tableData)
     }
   }

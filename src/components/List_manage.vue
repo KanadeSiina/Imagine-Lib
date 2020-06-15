@@ -28,7 +28,7 @@
     </el-card>
     <el-card class="box-card-2">
       <h2 class="box-title">删除图书信息</h2>
-      <el-form :model="del_form">
+      <el-form :model="del_form" :rules="rules" ref="delformRef">
         <p>图书ID：</p>
         <el-form-item prop="id_del">
           <el-input v-model="del_form.id_del" placeholder="图书ID"></el-input>
@@ -64,8 +64,18 @@ export default {
   methods: {
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
+        if (!valid) return this.$message.erros('格式错误')
+        const { data: res } = this.$http.post('add_list', this.input_form)
+        console.log(res)
         // 用axios提交表单交互
-        console.log(this.input_form)
+        // console.log(this.input_form)
+      })
+    },
+    delSubmit() {
+      this.$refs.delformRef.validate(async valid => {
+        if (!valid) return this.$message.erros('格式错误')
+        const { data: res } = this.$http.post('del_list', this.del_form)
+        console.log(res)
       })
     }
   }

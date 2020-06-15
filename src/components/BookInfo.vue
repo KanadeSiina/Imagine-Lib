@@ -9,7 +9,9 @@
       <h2 class="box-title">图书详情</h2>
       <!-- 搜索功能 -->
       <p style="font-size: 20px" align="center">{{book_name}}</p>
-      <p align="center">{{$route.params.id}}</p>
+      <div class="sub-title">
+        <p align="center">{{$route.params.id}}</p>
+      </div>
       <!-- 表格 -->
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="index"></el-table-column>
@@ -19,7 +21,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="list_place" label="图书位置"></el-table-column>
-        <el-table-column prop="book_state" label="状态"></el-table-column>
+        <el-table-column prop="list_state" label="状态"></el-table-column>
       </el-table>
     </el-card>
   </div>
@@ -34,7 +36,7 @@ export default {
         {
           list_id: 'c11.1',
           list_place: '流通室',
-          book_state: '未借出'
+          list_state: '未借出'
         }
       ]
     }
@@ -44,7 +46,13 @@ export default {
   },
   methods: {
     async getData() {
-      await console.log(this.$route.params.id)
+      console.log(this.$route.params.id)
+      const { data: res } = await this.$http.get('book_info', {
+        params: { ISBN: this.$route.params.id }
+      })
+      console.log(res)
+      this.tableData = res.data.tableData
+      this.book_name = res.data.book_name
     }
   }
 }
