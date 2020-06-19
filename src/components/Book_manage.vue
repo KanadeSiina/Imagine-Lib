@@ -10,7 +10,9 @@
       <el-form :model="input_form" :rules="rules" ref="inputformRef">
         <p>ISBN：</p>
         <el-form-item prop="ISBN">
-          <el-input v-model="input_form.ISBN" placeholder="ISBN号"></el-input>
+          <el-input v-model="input_form.ISBN" placeholder="ISBN号">
+            <el-button slot="append" icon="el-icon-search" @click="SearchISBN()"></el-button>
+          </el-input>
         </el-form-item>
         <p>书目名称：</p>
         <el-form-item prop="book_name">
@@ -74,7 +76,7 @@ export default {
   methods: {
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
-        if (!valid) return this.$message.erros('格式错误')
+        if (!valid) return this.$message.error('格式错误')
         const { data: res } = this.$http.post('add_book', this.input_form)
         console.log(res)
         // 用axios提交表单交互
@@ -83,10 +85,29 @@ export default {
     },
     delSubmit() {
       this.$refs.delformRef.validate(async valid => {
-        if (!valid) return this.$message.erros('格式错误')
+        if (!valid) return this.$message.error('格式错误')
         const { data: res } = this.$http.post('del_book', this.del_form)
         console.log(res)
       })
+    },
+    async SearchISBN() {
+      const isbn = this.input_form.ISBN
+      const qform = { is_info: '0', isbn: isbn }
+      const url = 'https://isbn.market.alicloudapi.com' + '/ISBN'
+      const appcode = '1bf4177f12a445b1a6b28acac5a056cc'
+      const { data: res } = await this.$http.get(url, {
+        params: qform,
+        headers: { Authorization: 'APPCODE ' + appcode }
+      })
+      if (res.error_code === 0) {
+        this.input_form.book_name = res.result.title
+        this.input_form.book_author = res.result.author
+        this.input_form.book_publisher = res.result.publisher
+        this.input_form.book_pubdate = res.result.pubdate
+      } else {
+        this.$message.error('未查询到该书信息')
+      }
+      console.log(res.result)
     }
   }
 }
