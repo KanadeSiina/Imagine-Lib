@@ -23,7 +23,7 @@
         出版社：
         <el-input placeholder="请输入内容" v-model="queryInfo.book_publisher"></el-input>
       </span>
-      <el-button icon="el-icon-search" @click="getTable()"></el-button>
+      <el-button icon="el-icon-search" @click="getData()"></el-button>
       <!-- 表格 -->
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="index"></el-table-column>
