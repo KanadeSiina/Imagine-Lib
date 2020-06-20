@@ -55,7 +55,18 @@ export default {
           reader_id: this.reader_id
         }
       })
-      this.tableData = res.data
+      const data = res.data
+      this.tableData = []
+      function modifyDate(date) {
+        return date
+      }
+      for (var idx in data) {
+        this.tableData.push({
+          ISBN: data[idx].bookIsbn,
+          borrow_date: modifyDate(data[idx].borrowDate),
+          time_limit: modifyDate(data[idx].returnDate)
+        })
+      }
       console.log(this.tableData)
     }
   }

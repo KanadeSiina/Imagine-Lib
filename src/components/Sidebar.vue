@@ -6,7 +6,7 @@
         <img src="../assets/SHU_logo.png" class="logo" />
         <div class="header-container" style="font-size: 20px">
           <span class="titlename">图书管理系统</span>
-          <div v-if="role === 'manager'">
+          <div v-if="role === 'Manager'">
             <el-menu class="el-menu-demo" mode="horizontal" router>
               <el-submenu index="1">
                 <template slot="title">
@@ -50,6 +50,7 @@
           </div>
         </div>
       </div>
+      <el-button @click="logout()" class="logoutbtn">登出</el-button>
     </el-header>
     <el-container>
       <!-- Aside -->
@@ -78,6 +79,11 @@ export default {
     },
     setRole() {
       this.role = window.sessionStorage.getItem('role')
+      console.log(this.role)
+    },
+    logout() {
+      window.sessionStorage.clear()
+      this.$router.push('/login')
     }
   }
 }
@@ -107,6 +113,11 @@ export default {
     top: 0;
     left: 200px;
   }
+}
+
+.logoutbtn {
+  float: right;
+  margin: 10px;
 }
 
 .dashboard {

@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     async getData() {
-      const { data: res } = await this.$http.get('reserve', {
+      const { data: res } = await this.$http.get('reserve_info', {
         params: {
           reader_id: this.input_form.reader_id
         }
@@ -89,7 +89,12 @@ export default {
       this.$refs.inputformRef.validate(async valid => {
         // 用axios提交表单交互
         console.log(this.input_form)
-        const { data: res } = await this.$http.post('reserve', this.input_form)
+        const rdata = this.$test.stringify(this.input_form)
+        const { data: res } = await this.$http.post('reserve', rdata, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          }
+        })
         console.log(res)
       })
     },

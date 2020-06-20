@@ -77,7 +77,12 @@ export default {
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         if (!valid) return this.$message.error('格式错误')
-        const { data: res } = this.$http.post('add_book', this.input_form)
+        const anf = this.input_form
+        const { data: res } = await this.$http.post('add_book', this.$test.stringify(anf), {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        })
         console.log(res)
         // 用axios提交表单交互
         // console.log(this.input_form)
@@ -86,8 +91,18 @@ export default {
     delSubmit() {
       this.$refs.delformRef.validate(async valid => {
         if (!valid) return this.$message.error('格式错误')
-        const { data: res } = this.$http.post('del_book', this.del_form)
+        const anf = { ISBN: this.del_form.ISBN_del }
+        const { data: res } = await this.$http.post('del_book', this.$test.stringify(anf), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          }
+        })
         console.log(res)
+        if (res.code === 1) {
+          this.$message.success('删除成功')
+        } else {
+          this.$message.error(res.msg)
+        }
       })
     },
     async SearchISBN() {

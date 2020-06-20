@@ -65,7 +65,12 @@ export default {
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         if (!valid) return this.$message.erros('格式错误')
-        const { data: res } = this.$http.post('add_list', this.input_form)
+        const anf = this.input_form
+        const { data: res } = await this.$http.post('add_list', this.$test.stringify(anf), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          }
+        })
         console.log(res)
         // 用axios提交表单交互
         // console.log(this.input_form)

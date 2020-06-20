@@ -90,15 +90,19 @@ export default {
     login() {
       this.$refs.loginformRef.validate(async valid => {
         if (!valid) return this.$message.error('登录失败！')
-        const { data: res } = await this.$http.post('login', this.loginform)
+        const anf = this.loginform
+        const { data: res } = await this.$http.post('login', this.$test.stringify(anf), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          }
+        })
         // 待有实际接口后修改
         console.log(res)
-        console.log(res.code)
         if (res.code !== 1) return this.$message.error('登录失败！')
         this.$message.success('登录成功！')
-        window.sessionStorage.setItem('token', res.data.token)
-        window.sessionStorage.setItem('role', res.data.role)
-        window.sessionStorage.setItem('user_id', res.data.user_id)
+        window.sessionStorage.setItem('token', 233)
+        window.sessionStorage.setItem('role', this.loginform.role)
+        window.sessionStorage.setItem('user_id', this.loginform.username)
         this.$router.push('/dashboard')
       })
     }
