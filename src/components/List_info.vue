@@ -26,17 +26,11 @@
 export default {
   data() {
     return {
-      book_name: '初等数论',
-      list_id: 'c11.1',
-      list_place: '流通室',
-      list_state: '未借出',
-      tableData: [
-        {
-          reader_id: '001',
-          borrow_date: '2020-06-13',
-          return_date: '2020-06-13'
-        }
-      ]
+      book_name: '',
+      list_id: '',
+      list_place: '',
+      list_state: '',
+      tableData: []
     }
   },
   created: function() {

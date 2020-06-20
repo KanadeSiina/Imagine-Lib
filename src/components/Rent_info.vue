@@ -22,20 +22,7 @@ export default {
   data() {
     return {
       reader_id: '',
-      tableData: [
-        {
-          book_name: '初等数论',
-          ISBN: 'ISBN7-302-02368-20',
-          borrow_date: '2020-06-13 22:00:00',
-          time_limit: '2020-06-14 22:00:00'
-        },
-        {
-          book_name: '你爸爸',
-          ISBN: 'ISBN-114514',
-          borrow_date: '2020-06-13 22:00:00',
-          time_limit: '2020-06-14 22:00:00'
-        }
-      ]
+      tableData: []
     }
   },
   created: function() {

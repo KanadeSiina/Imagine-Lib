@@ -3,7 +3,7 @@
     <transition name="fade">
       <div v-show="show" class="login_box">
         <div class="container_header">
-          <div class="login_title" style="font-size: 20px">幻想图书馆登录</div>
+          <div class="login_title" style="font-size: 20px">图书管理系统登录</div>
         </div>
         <!-- 表单 -->
         <el-form

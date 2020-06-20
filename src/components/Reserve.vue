@@ -55,20 +55,7 @@ export default {
           { validator: checkTime, trigger: 'blur' }
         ]
       },
-      tableData: [
-        {
-          book_name: '初等数论',
-          ISBN: 'ISBN7-302-02368-20',
-          book_state: '已预约',
-          time_limit: '2020-06-14 22:00:00'
-        },
-        {
-          book_name: '你爸爸',
-          ISBN: 'ISBN-114514',
-          book_state: '暂无馆藏',
-          time_limit: '2020-06-14 22:00:00'
-        }
-      ]
+      tableData: []
     }
   },
   created: function() {

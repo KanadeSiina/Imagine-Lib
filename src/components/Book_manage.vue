@@ -74,6 +74,20 @@ export default {
     }
   },
   methods: {
+    clearInput() {
+      input_form = {
+        ISBN: '',
+        book_name: '',
+        book_author: '',
+        book_publisher: '',
+        book_pubdate: ''
+      }
+    },
+    clearDel() {
+      del_form = {
+        ISBN_del: ''
+      }
+    },
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         if (!valid) return this.$message.error('格式错误')
@@ -88,6 +102,7 @@ export default {
         )
         console.log(res)
         if (res.code === 1) {
+          this.clearInput()
           return this.$message.success('录入成功')
         }
         return this.$message.error(res.msg)
@@ -109,6 +124,7 @@ export default {
         )
         console.log(res)
         if (res.code === 1) {
+          this.clearDel()
           this.$message.success('删除成功')
         } else {
           this.$message.error(res.msg)

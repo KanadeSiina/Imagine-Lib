@@ -30,6 +30,11 @@ export default {
     }
   },
   methods: {
+    clearInput() {
+      this.input_form = {
+        list_id: ''
+      }
+    },
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         // 用axios提交表单交互
@@ -45,6 +50,7 @@ export default {
         )
         console.log(res)
         if (res.code === 1) {
+          this.clearInput()
           return this.$message.success('归还成功')
         }
         return this.$message.error(res.msg)

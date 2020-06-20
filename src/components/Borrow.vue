@@ -36,6 +36,12 @@ export default {
     }
   },
   methods: {
+    clearInput() {
+      input_form = {
+        list_id: '',
+        reader_id: ''
+      }
+    },
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         // 用axios提交表单交互
@@ -43,6 +49,7 @@ export default {
         const { data: res } = await this.$http.post('borrow', this.input_form)
         console.log(res)
         if (res.code === 1) {
+          this.clearInput()
           return this.$message.success('借阅成功')
         }
         return this.$message.error(res.msg)
