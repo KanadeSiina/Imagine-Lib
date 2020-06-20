@@ -82,7 +82,7 @@ export default {
         if (res.code !== 1) return this.$message.error('登录失败！')
         this.$message.success('登录成功！')
         window.sessionStorage.setItem('token', 233)
-        window.sessionStorage.setItem('role', res.data.authorities[0].role)
+        window.sessionStorage.setItem('role', res.data.role)
         window.sessionStorage.setItem('user_id', this.loginform.username)
         this.$router.push('/dashboard')
       })

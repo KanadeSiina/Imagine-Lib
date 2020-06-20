@@ -6,7 +6,23 @@
         <img src="../assets/SHU_logo.png" class="logo" />
         <div class="header-container" style="font-size: 20px">
           <span class="titlename">图书管理系统</span>
-          <div v-if="role === 'ROLE_admin'">
+          <div v-if="role === 'reader'">
+            <el-menu class="el-menu-demo" mode="horizontal" router>
+              <el-menu-item index="/reserve">
+                <i class="el-icon-document"></i>
+                <span slot="title">预约管理</span>
+              </el-menu-item>
+              <el-menu-item index="/rent_info">
+                <i class="el-icon-document"></i>
+                <span slot="title">借阅信息</span>
+              </el-menu-item>
+              <el-menu-item index="/book">
+                <i class="el-icon-document"></i>
+                <span slot="title">图书目录</span>
+              </el-menu-item>
+            </el-menu>
+          </div>
+          <div v-else>
             <el-menu class="el-menu-demo" mode="horizontal" router>
               <el-submenu index="1">
                 <template slot="title">
@@ -25,22 +41,6 @@
               <el-menu-item index="/return">
                 <i class="el-icon-document"></i>
                 <span slot="title">还书管理</span>
-              </el-menu-item>
-              <el-menu-item index="/book">
-                <i class="el-icon-document"></i>
-                <span slot="title">图书目录</span>
-              </el-menu-item>
-            </el-menu>
-          </div>
-          <div v-else>
-            <el-menu class="el-menu-demo" mode="horizontal" router>
-              <el-menu-item index="/reserve">
-                <i class="el-icon-document"></i>
-                <span slot="title">预约管理</span>
-              </el-menu-item>
-              <el-menu-item index="/rent_info">
-                <i class="el-icon-document"></i>
-                <span slot="title">借阅信息</span>
               </el-menu-item>
               <el-menu-item index="/book">
                 <i class="el-icon-document"></i>
