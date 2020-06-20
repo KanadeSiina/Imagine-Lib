@@ -31,7 +31,7 @@
       <el-form :model="del_form" :rules="rules" ref="delformRef">
         <p>图书ID：</p>
         <el-form-item prop="id_del">
-          <el-input v-model="del_form.id_del" placeholder="图书ID"></el-input>
+          <el-input v-model.number="del_form.id_del" placeholder="图书ID"></el-input>
         </el-form-item>
         <el-button type="primary" @click="delSubmit()" class="inputbtn">删除</el-button>
       </el-form>
@@ -49,7 +49,7 @@ export default {
         list_place: ''
       },
       del_form: {
-        ISBN_del: ''
+        id_del: ''
       },
       rules: {
         ISBN: [{ required: true, message: '不能为空', trigger: 'change' }],
@@ -64,23 +64,43 @@ export default {
   methods: {
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
-        if (!valid) return this.$message.erros('格式错误')
+        if (!valid) return this.$message.error('格式错误')
         const anf = this.input_form
-        const { data: res } = await this.$http.post('add_list', this.$test.stringify(anf), {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        const { data: res } = await this.$http.post(
+          'add_list',
+          JSON.stringify(anf),
+          {
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            }
           }
-        })
+        )
         console.log(res)
+        if (res.code === 1) {
+          return this.$message.success('录入成功')
+        }
+        return this.$message.error(res.msg)
         // 用axios提交表单交互
         // console.log(this.input_form)
       })
     },
     delSubmit() {
       this.$refs.delformRef.validate(async valid => {
-        if (!valid) return this.$message.erros('格式错误')
-        const { data: res } = this.$http.post('del_list', this.del_form)
+        if (!valid) return this.$message.error('格式错误')
+        const { data: res } = await this.$http.post(
+          'del_list',
+          JSON.stringify(this.del_form.id_del),
+          {
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            }
+          }
+        )
         console.log(res)
+        if (res.code === 1) {
+          return this.$message.success('删除成功')
+        }
+        return this.$message.error(res.msg)
       })
     }
   }

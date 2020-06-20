@@ -57,14 +57,12 @@ export default {
       })
       const data = res.data
       this.tableData = []
-      function modifyDate(date) {
-        return date
-      }
       for (var idx in data) {
         this.tableData.push({
-          ISBN: data[idx].bookIsbn,
-          borrow_date: modifyDate(data[idx].borrowDate),
-          time_limit: modifyDate(data[idx].returnDate)
+          book_name: data[idx].book.bookName,
+          ISBN: data[idx].rentInfo.bookIsbn,
+          borrow_date: data[idx].rentInfo.borrowDate,
+          time_limit: data[idx].rentInfo.returnDate
         })
       }
       console.log(this.tableData)

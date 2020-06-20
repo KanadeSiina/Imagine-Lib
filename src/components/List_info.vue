@@ -52,11 +52,11 @@ export default {
         }
       })
       // console.log(res)
-      this.tableData = res.data.tableData
-      this.book_name = res.data.book_name
-      this.list_id = res.data.list_id
-      this.list_place = res.data.list_place
-      this.list_state = res.data.list_state
+      this.tableData = res.data.book
+      this.book_name = res.data.book.bookName
+      this.list_id = res.data.bookLists[0].listId
+      this.list_place = res.data.bookLists[0].listPlace
+      this.list_state = res.data.bookLists[0].listState
     }
   }
 }

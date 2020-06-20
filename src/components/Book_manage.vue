@@ -38,7 +38,7 @@
       <el-form :model="del_form" :rules="rules" ref="delformRef">
         <p>ISBN号：</p>
         <el-form-item prop="ISBN_del">
-          <el-input v-model="del_form.ISBN_del" placeholder="ISBN号"></el-input>
+          <el-input v-model.number="del_form.ISBN_del" placeholder="ISBN号"></el-input>
         </el-form-item>
         <el-button type="primary" @click="delSubmit()" class="inputbtn">删除</el-button>
       </el-form>
@@ -77,13 +77,20 @@ export default {
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         if (!valid) return this.$message.error('格式错误')
-        const anf = this.input_form
-        const { data: res } = await this.$http.post('add_book', this.$test.stringify(anf), {
-          headers: {
-            'Content-Type': 'application/json;charset=UTF-8'
+        const { data: res } = await this.$http.post(
+          'add_book',
+          JSON.stringify(this.input_form),
+          {
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            }
           }
-        })
+        )
         console.log(res)
+        if (res.code === 1) {
+          return this.$message.success('录入成功')
+        }
+        return this.$message.error(res.msg)
         // 用axios提交表单交互
         // console.log(this.input_form)
       })
@@ -91,12 +98,15 @@ export default {
     delSubmit() {
       this.$refs.delformRef.validate(async valid => {
         if (!valid) return this.$message.error('格式错误')
-        const anf = { ISBN: this.del_form.ISBN_del }
-        const { data: res } = await this.$http.post('del_book', this.$test.stringify(anf), {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        const { data: res } = await this.$http.post(
+          'del_book',
+          JSON.stringify(this.del_form.ISBN_del),
+          {
+            headers: {
+              'Content-Type': 'text/html'
+            }
           }
-        })
+        )
         console.log(res)
         if (res.code === 1) {
           this.$message.success('删除成功')

@@ -7,9 +7,9 @@
     <el-card class="box-card-1">
       <h2 class="box-title">借阅书目</h2>
       <el-form :model="input_form" :rules="rules" ref="inputformRef">
-        <p>ISBN：</p>
-        <el-form-item prop="ISBN">
-          <el-input v-model="input_form.ISBN" placeholder="ISBN号"></el-input>
+        <p>图书ID：</p>
+        <el-form-item prop="list_id">
+          <el-input v-model="input_form.list_id" placeholder="图书ID"></el-input>
         </el-form-item>
         <p>读者ID：</p>
         <el-form-item prop="reader_id">
@@ -26,11 +26,11 @@ export default {
   data() {
     return {
       input_form: {
-        ISBN: '',
+        list_id: '',
         reader_id: ''
       },
       rules: {
-        ISBN: [{ required: true, message: '不能为空', trigger: 'change' }],
+        list_id: [{ required: true, message: '不能为空', trigger: 'change' }],
         reader_id: [{ required: true, message: '不能为空', trigger: 'change' }]
       }
     }
@@ -42,6 +42,10 @@ export default {
         // console.log(this.input_form)
         const { data: res } = await this.$http.post('borrow', this.input_form)
         console.log(res)
+        if (res.code === 1) {
+          return this.$message.success('借阅成功')
+        }
+        return this.$message.error(res.msg)
       })
     }
   }

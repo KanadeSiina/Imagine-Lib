@@ -51,8 +51,16 @@ export default {
         params: { ISBN: this.$route.params.id }
       })
       console.log(res)
-      this.tableData = res.data.tableData
-      this.book_name = res.data.book_name
+      this.tableData = []
+      for (var idx in res.data.bookLists) {
+        const cur = res.data.bookLists[idx]
+        this.tableData.push({
+          list_id: cur.listId,
+          list_place: cur.listPlace,
+          list_state: cur.listState
+        })
+      }
+      this.book_name = res.data.book.bookName
     }
   }
 }

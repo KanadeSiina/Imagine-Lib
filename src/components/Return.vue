@@ -9,7 +9,7 @@
       <el-form :model="input_form" :rules="rules" ref="inputformRef">
         <p>图书ID：</p>
         <el-form-item prop="list_id">
-          <el-input v-model="input_form.list_id" placeholder="图书ID"></el-input>
+          <el-input v-model.number="input_form.list_id" placeholder="图书ID"></el-input>
         </el-form-item>
         <el-button type="primary" @click="inputSubmit()" class="inputbtn">录入</el-button>
       </el-form>
@@ -34,8 +34,20 @@ export default {
       this.$refs.inputformRef.validate(async valid => {
         // 用axios提交表单交互
         // console.log(this.input_form)
-        const { data: res } = await this.$http.post('return', this.input_form)
+        const { data: res } = await this.$http.post(
+          'return',
+          JSON.stringify(this.input_form.list_id),
+          {
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            }
+          }
+        )
         console.log(res)
+        if (res.code === 1) {
+          return this.$message.success('归还成功')
+        }
+        return this.$message.error(res.msg)
       })
     }
   }

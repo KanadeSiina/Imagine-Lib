@@ -82,20 +82,34 @@ export default {
           reader_id: this.input_form.reader_id
         }
       })
-      this.tableData = res.data
+      this.tableData = []
+      for (var idx in res.data) {
+        var cur = res.data[idx]
+        this.tableData.push({
+          book_name: cur.book.bookName,
+          ISBN: cur.reserveInfo.bookIsbn,
+          book_state: cur.reserveInfo.reserveAgent === '成功' ? '已预约' : '暂无馆藏',
+          time_limit: cur.reserveInfo.rentLimit
+        })
+      }
       console.log(this.tableData)
     },
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         // 用axios提交表单交互
         console.log(this.input_form)
-        const rdata = this.$test.stringify(this.input_form)
+        var rdata = JSON.stringify(this.input_form)
         const { data: res } = await this.$http.post('reserve', rdata, {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            'Content-Type': 'application/json; charset=UTF-8'
           }
         })
         console.log(res)
+        if (res.code === 1) {
+          this.getData()
+          return this.$message.success('预约成功')
+        }
+        return this.$message.error(res.msg)
       })
     },
     tableRowClassName({ row, rowIndex }) {
