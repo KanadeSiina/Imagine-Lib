@@ -6,7 +6,7 @@
         <img src="../assets/SHU_logo.png" class="logo" />
         <div class="header-container" style="font-size: 20px">
           <span class="titlename">图书管理系统</span>
-          <div v-if="role === 'Manager'">
+          <div v-if="role === 'ROLE_admin'">
             <el-menu class="el-menu-demo" mode="horizontal" router>
               <el-submenu index="1">
                 <template slot="title">

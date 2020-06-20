@@ -27,14 +27,6 @@
               type="password"
             ></el-input>
           </el-form-item>
-          <el-select v-model="loginform.role" placeholder="身份">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
           <el-form-item class="btns">
             <el-button type="primary" @click="login()">登录</el-button>
           </el-form-item>
@@ -60,24 +52,13 @@ export default {
     return {
       show: false,
       loginform: {
-        username: 'compute',
-        password: '999',
-        role: 'Reader'
+        username: '',
+        password: ''
       },
       rules: {
         username: [{ validator: checkName, trigger: 'blur' }],
         password: [{ validator: checkPass, trigger: 'blur' }]
-      },
-      options: [
-        {
-          value: 'Manager',
-          label: '管理员'
-        },
-        {
-          value: 'Reader',
-          label: '读者'
-        }
-      ]
+      }
     }
   },
   mounted: function() {
@@ -101,7 +82,7 @@ export default {
         if (res.code !== 1) return this.$message.error('登录失败！')
         this.$message.success('登录成功！')
         window.sessionStorage.setItem('token', 233)
-        window.sessionStorage.setItem('role', this.loginform.role)
+        window.sessionStorage.setItem('role', res.data.authorities[0].role)
         window.sessionStorage.setItem('user_id', this.loginform.username)
         this.$router.push('/dashboard')
       })

@@ -46,11 +46,19 @@ export default {
         }
       })
       // console.log(res)
-      this.tableData = res.data.book
       this.book_name = res.data.book.bookName
       this.list_id = res.data.bookLists[0].listId
       this.list_place = res.data.bookLists[0].listPlace
       this.list_state = res.data.bookLists[0].listState
+      this.tableData = []
+      for (var idx in res.data.RentInfoList) {
+        var cur = res.data.RentInfoList[idx]
+        this.tableData.push({
+          reader_id: cur.readerId,
+          borrow_date: cur.borrowDate,
+          return_date: cur.returnDate
+        })
+      }
     }
   }
 }

@@ -64,7 +64,7 @@ export default {
         pagenum: 1,
         pagesize: 20
       },
-      total: 2,
+      total: 0,
       tableData: []
     }
   },

@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     clearInput() {
-      input_form = {
+      this.input_form = {
         list_id: '',
         reader_id: ''
       }

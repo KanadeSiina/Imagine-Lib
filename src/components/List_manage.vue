@@ -63,14 +63,14 @@ export default {
   },
   methods: {
     clearInput() {
-      input_form = {
+      this.input_form = {
         ISBN: '',
         list_id: '',
         list_place: ''
       }
     },
     clearDel() {
-      del_form = {
+      this.del_form = {
         id_del: ''
       }
     },
@@ -111,7 +111,7 @@ export default {
         )
         console.log(res)
         if (res.code === 1) {
-          clearDel()
+          this.clearDel()
           return this.$message.success('删除成功')
         }
         return this.$message.error(res.msg)

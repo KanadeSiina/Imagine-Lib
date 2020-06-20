@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     clearInput() {
-      input_form = {
+      this.input_form = {
         ISBN: '',
         book_name: '',
         book_author: '',
@@ -84,7 +84,7 @@ export default {
       }
     },
     clearDel() {
-      del_form = {
+      this.del_form = {
         ISBN_del: ''
       }
     },

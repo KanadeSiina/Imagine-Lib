@@ -31,14 +31,8 @@
 export default {
   data() {
     return {
-      book_name: '初等数论',
-      tableData: [
-        {
-          list_id: 'c11.1',
-          list_place: '流通室',
-          list_state: '未借出'
-        }
-      ]
+      book_name: '',
+      tableData: []
     }
   },
   created: function() {
