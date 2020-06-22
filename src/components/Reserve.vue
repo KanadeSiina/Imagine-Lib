@@ -63,12 +63,80 @@ export default {
     this.getData()
   },
   methods: {
+    inputClaer() {
+      this.input_form = {
+        reader_id: '',
+        ISBN: '',
+        reserve_time: ''
+      }
+    },
     async getData() {
       const { data: res } = await this.$http.get('reserve_info', {
         params: {
           reader_id: this.input_form.reader_id
         }
       })
+      function modifyDate(x) {
+        x = x.split(',')
+        x = x[0].trim() + ' ' + x[1].trim()
+        x = x.split(' ')
+        var mm = x[0]
+        mm = mm.toUpperCase()
+        var em = [
+          'JAN',
+          'FEB',
+          'MAR',
+          'APR',
+          'MAY',
+          'JUN',
+          'JUL',
+          'AUG',
+          'SEP',
+          'OCT',
+          'NOV',
+          'DEC'
+        ]
+        switch (mm) {
+          case em[0]:
+            mm = 1
+            break
+          case em[1]:
+            mm = 2
+            break
+          case em[2]:
+            mm = 3
+            break
+          case em[3]:
+            mm = 4
+            break
+          case em[4]:
+            mm = 5
+            break
+          case em[5]:
+            mm = 6
+            break
+          case em[6]:
+            mm = 7
+            break
+          case em[7]:
+            mm = 8
+            break
+          case em[8]:
+            mm = 9
+            break
+          case em[9]:
+            mm = 10
+            break
+          case em[10]:
+            mm = 11
+            break
+          case em[11]:
+            mm = 12
+            break
+        }
+        x = x[2] + '年' + mm + '月' + x[1] + '日'
+        return x
+      }
       this.tableData = []
       for (var idx in res.data) {
         var cur = res.data[idx]
@@ -76,7 +144,7 @@ export default {
           book_name: cur.book.bookName,
           ISBN: cur.reserveInfo.bookIsbn,
           book_state: cur.reserveInfo.reserveAgent === '成功' ? '已预约' : '暂无馆藏',
-          time_limit: cur.reserveInfo.rentLimit
+          time_limit: modifyDate(cur.reserveInfo.rentLimit)
         })
       }
       console.log(this.tableData)
@@ -84,6 +152,7 @@ export default {
     inputSubmit() {
       this.$refs.inputformRef.validate(async valid => {
         // 用axios提交表单交互
+        if (!valid) return this.$message.error('格式错误')
         console.log(this.input_form)
         var rdata = JSON.stringify(this.input_form)
         const { data: res } = await this.$http.post('reserve', rdata, {
@@ -94,6 +163,7 @@ export default {
         console.log(res)
         if (res.code === 1) {
           this.getData()
+          this.inputClaer()
           return this.$message.success('预约成功')
         }
         return this.$message.error(res.msg)

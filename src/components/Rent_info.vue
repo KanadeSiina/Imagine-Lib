@@ -42,14 +42,75 @@ export default {
           reader_id: this.reader_id
         }
       })
+      function modifyDate(x) {
+        x = x.split(',')
+        x = x[0].trim() + ' ' + x[1].trim()
+        x = x.split(' ')
+        var mm = x[0]
+        mm = mm.toUpperCase()
+        var em = [
+          'JAN',
+          'FEB',
+          'MAR',
+          'APR',
+          'MAY',
+          'JUN',
+          'JUL',
+          'AUG',
+          'SEP',
+          'OCT',
+          'NOV',
+          'DEC'
+        ]
+        switch (mm) {
+          case em[0]:
+            mm = 1
+            break
+          case em[1]:
+            mm = 2
+            break
+          case em[2]:
+            mm = 3
+            break
+          case em[3]:
+            mm = 4
+            break
+          case em[4]:
+            mm = 5
+            break
+          case em[5]:
+            mm = 6
+            break
+          case em[6]:
+            mm = 7
+            break
+          case em[7]:
+            mm = 8
+            break
+          case em[8]:
+            mm = 9
+            break
+          case em[9]:
+            mm = 10
+            break
+          case em[10]:
+            mm = 11
+            break
+          case em[11]:
+            mm = 12
+            break
+        }
+        x = x[2] + '年' + mm + '月' + x[1] + '日'
+        return x
+      }
       const data = res.data
       this.tableData = []
       for (var idx in data) {
         this.tableData.push({
           book_name: data[idx].book.bookName,
           ISBN: data[idx].rentInfo.bookIsbn,
-          borrow_date: data[idx].rentInfo.borrowDate,
-          time_limit: data[idx].rentInfo.returnDate
+          borrow_date: modifyDate(data[idx].rentInfo.borrowDate),
+          time_limit: modifyDate(data[idx].rentInfo.returnDate)
         })
       }
       console.log(this.tableData)

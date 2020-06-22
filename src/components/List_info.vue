@@ -16,7 +16,7 @@
         <el-table-column type="index"></el-table-column>
         <el-table-column prop="reader_id" label="读者ID"></el-table-column>
         <el-table-column prop="borrow_date" label="借出时间"></el-table-column>
-        <el-table-column prop="return_date" label="归还时间"></el-table-column>
+        <el-table-column prop="return_date" label="应还时间"></el-table-column>
       </el-table>
     </el-card>
   </div>
@@ -51,12 +51,73 @@ export default {
       this.list_place = res.data.bookLists[0].listPlace
       this.list_state = res.data.bookLists[0].listState
       this.tableData = []
+      function modifyDate(x) {
+        x = x.split(',')
+        x = x[0].trim() + ' ' + x[1].trim()
+        x = x.split(' ')
+        var mm = x[0]
+        mm = mm.toUpperCase()
+        var em = [
+          'JAN',
+          'FEB',
+          'MAR',
+          'APR',
+          'MAY',
+          'JUN',
+          'JUL',
+          'AUG',
+          'SEP',
+          'OCT',
+          'NOV',
+          'DEC'
+        ]
+        switch (mm) {
+          case em[0]:
+            mm = 1
+            break
+          case em[1]:
+            mm = 2
+            break
+          case em[2]:
+            mm = 3
+            break
+          case em[3]:
+            mm = 4
+            break
+          case em[4]:
+            mm = 5
+            break
+          case em[5]:
+            mm = 6
+            break
+          case em[6]:
+            mm = 7
+            break
+          case em[7]:
+            mm = 8
+            break
+          case em[8]:
+            mm = 9
+            break
+          case em[9]:
+            mm = 10
+            break
+          case em[10]:
+            mm = 11
+            break
+          case em[11]:
+            mm = 12
+            break
+        }
+        x = x[2] + '年' + mm + '月' + x[1] + '日'
+        return x
+      }
       for (var idx in res.data.RentInfoList) {
         var cur = res.data.RentInfoList[idx]
         this.tableData.push({
           reader_id: cur.readerId,
-          borrow_date: cur.borrowDate,
-          return_date: cur.returnDate
+          borrow_date: modifyDate(cur.borrowDate),
+          return_date: modifyDate(cur.returnDate)
         })
       }
     }
