@@ -80,6 +80,68 @@ export default {
       const { data: res } = await this.$http.get('book', {
         params: this.queryInfo
       })
+      function modifyDate(x) {
+        if (!x) return x
+        x = x.split(',')
+        x = x[0].trim() + ' ' + x[1].trim()
+        x = x.split(' ')
+        var mm = x[0]
+        mm = mm.toUpperCase()
+        var em = [
+          'JAN',
+          'FEB',
+          'MAR',
+          'APR',
+          'MAY',
+          'JUN',
+          'JUL',
+          'AUG',
+          'SEP',
+          'OCT',
+          'NOV',
+          'DEC'
+        ]
+        switch (mm) {
+          case em[0]:
+            mm = 1
+            break
+          case em[1]:
+            mm = 2
+            break
+          case em[2]:
+            mm = 3
+            break
+          case em[3]:
+            mm = 4
+            break
+          case em[4]:
+            mm = 5
+            break
+          case em[5]:
+            mm = 6
+            break
+          case em[6]:
+            mm = 7
+            break
+          case em[7]:
+            mm = 8
+            break
+          case em[8]:
+            mm = 9
+            break
+          case em[9]:
+            mm = 10
+            break
+          case em[10]:
+            mm = 11
+            break
+          case em[11]:
+            mm = 12
+            break
+        }
+        x = x[2] + '年' + mm + '月' + x[1] + '日'
+        return x
+      }
       console.log(res.data)
       const table = res.data.list
       this.tableData = []
@@ -89,7 +151,7 @@ export default {
           book_author: table[idx].bookAuthor,
           book_publisher: table[idx].bookPublisher,
           ISBN: table[idx].bookIsbn,
-          book_pubdate: table[idx].bookPubdate,
+          book_pubdate: modifyDate(table[idx].bookPubdate),
           book_num: table[idx].bookNum
         })
       }
