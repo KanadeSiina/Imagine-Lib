@@ -133,8 +133,8 @@ export default {
     },
     async SearchISBN() {
       const isbn = this.input_form.ISBN
-      const qform = { is_info: '0', isbn: isbn }
-      const url = 'https://isbn.market.alicloudapi.com' + '/ISBN'
+      const qform = { isbn: isbn }
+      const url = '/aaa/ISBN'
       const appcode = '1bf4177f12a445b1a6b28acac5a056cc'
       const { data: res } = await this.$http.get(url, {
         params: qform,
