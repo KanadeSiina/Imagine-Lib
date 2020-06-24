@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '@/views/index.vue'
-import Dashboard from '@/components/Sidebar.vue'
-import BookManage from '@/components/Book_manage.vue'
-import ListManage from '@/components/List_manage.vue'
-import Borrow from '@/components/Borrow.vue'
-import Return from '@/components/Return.vue'
-import Reserve from '@/components/Reserve.vue'
-import RentInfo from '@/components/Rent_info.vue'
-import Book from '@/components/Book.vue'
-import BookInfo from '@/components/BookInfo.vue'
-import ListInfo from '@/components/List_info.vue'
+const Login = () => import('@/views/index.vue')
+const Dashboard = () => import('@/components/Sidebar.vue')
+const BookManage = () => import('@/components/Book_manage.vue')
+const ListManage = () => import('@/components/List_manage.vue')
+const Borrow = () => import('@/components/Borrow.vue')
+const Return = () => import('@/components/Return.vue')
+const Reserve = () => import('@/components/Reserve.vue')
+const RentInfo = () => import('@/components/Rent_info.vue')
+const Book = () => import('@/components/Book.vue')
+const BookInfo = () => import('@/components/BookInfo.vue')
+const ListInfo = () => import('@/components/List_info.vue')
 
 Vue.use(VueRouter)
 
